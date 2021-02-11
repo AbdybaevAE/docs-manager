@@ -5,7 +5,8 @@ import {
     Input,
     Row,
     Select,
-    Table
+    Table,
+    Tag
 } from 'antd';
 import Loader from 'react-loaders';
 import React, {useState} from 'react';
@@ -13,14 +14,16 @@ import {clearToken} from '../../utils/cookies';
 import {useHistory} from 'react-router-dom';
 import {SearchArgs, SearchService, TSearchResult} from '../../api/search';
 import {TableViewResults} from './DocsTable';
-import { TFormData } from './types';
-import { SearchFormView } from './SearchFormView';
+import {TFormData} from './types';
+import {SearchFormView} from './SearchFormView';
+import {render} from '@testing-library/react';
+import moment from 'moment';
 const {Option} = Select;
 
 type TProps = {
     results: TSearchResult[],
-    doSearch: (data: SearchArgs) => void;
-    onFormSubmit: (data: TFormData) => void;
+    doSearch: (data : SearchArgs) => void;
+    onFormSubmit: (data : TFormData) => void;
     doLogout: () => void;
 }
 
@@ -44,27 +47,44 @@ const columns = [
     }, {
         title: 'Атрибуты документа',
         dataIndex: 'atributes',
-        key: 'atributes'
+        render: (text: string, row: TSearchResult, index: number) => {
+            const attributes: string[] = Object.values(row.attributes);
+            return attributes.map((item: string) => <Tag>{item}</Tag>);
+        },
+        width: '200px'
     }, {
-        title: 'Дата',
+        title: 'Дата документа',
         dataIndex: 'data',
-        key: 'data'
+        render: (text, row, index) => {
+            return moment(row.createdAt).format("DD-MM-YYYY")
+        }
+    }, {
+        title: "Действия",
+        render: (text, row, index) => {
+            return (
+                <a href={row.name} download>Скачать</a >
+            );
+        }
     }
 ];
 
 export const DocsManagerView = (props : TProps) => {
     const history = useHistory();
-    const {onFormSubmit, results, doLogout } = props;
+    const {onFormSubmit, results, doLogout} = props;
     const onLogout = () => {
         clearToken();
         history.push('/login');
-
     }
     return (
         <div>
-            <Button onClick={onLogout}>Выход</Button>
-            <SearchFormView onFinish= {onFormSubmit}/>
-            <Table rowKey={'id'} dataSource={results} columns={columns}/>;
+            <Row>
+                <Col offset={19}>
+                    <Button onClick={onLogout}>Выход</Button>        
+                </Col>
+            </Row>
+            
+            <SearchFormView onFinish={onFormSubmit}/>
+            <Table bordered={true} rowKey={'id'} dataSource={results} columns={columns}/>;
         </div>
     )
 };

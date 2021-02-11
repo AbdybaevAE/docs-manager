@@ -17,12 +17,12 @@ export const SearchFormView = (props : TFormProps) => {
             <Row>
                 <Col offset={1} span={7}>
                     <Form.Item label="Номер документа" name="docNumber">
-                        <Input/>
+                        <Input placeholder="Введите номер документа"/>
                     </Form.Item>
                 </Col>
                 <Col offset={1} span={6}>
                     <Form.Item label="Класс документа" name="docClass">
-                        <Input/>
+                        <Input placeholder="Введите класс документа"/>
                     </Form.Item>
                 </Col>
 
@@ -38,7 +38,7 @@ export const SearchFormView = (props : TFormProps) => {
                 </Col>
                 <Col offset={1} span={6}>
                     <Form.Item label="Организация" name="docOrganization">
-                        <Input/>
+                        <Input placeholder="Введите организацию"/>
                     </Form.Item>
                 </Col>
             </Row>
@@ -46,7 +46,7 @@ export const SearchFormView = (props : TFormProps) => {
                 {(fields, {add, remove}) => {
                     return (
                         <div>
-                            {fields.map((field, index) => (
+                            {fields.map((field, index : number) => (
                                 <Row key={field.key}>
                                     <Col offset={5}>
                                         <Form.Item name={[index, "key"]} label="Ключ">
@@ -56,6 +56,13 @@ export const SearchFormView = (props : TFormProps) => {
                                     <Col offset={1}>
                                         <Form.Item name={[index, "value"]} label="Значение">
                                             <Input placeholder="введите значение"/>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col offset={1}>
+                                        <Form.Item>
+                                            <Button type="dashed" onClick={() => remove(index)}>
+                                                Удалить атрибут
+                                            </Button>
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -74,13 +81,16 @@ export const SearchFormView = (props : TFormProps) => {
                     )
                 }}
             </Form.List>
-            <Form.Item labelCol={{
-                offset: 3
-            }}>
-                <Button type="primary" htmlType="submit">
-                    Поиск
-                </Button>
-            </Form.Item>
+            <Row>
+                <Col offset={4}>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            Поиск
+                        </Button>
+                    </Form.Item>
+                </Col>
+            </Row>
+
         </Form>
     )
 }
