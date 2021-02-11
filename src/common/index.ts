@@ -16,6 +16,5 @@ export interface BaseAction {
     ;
 }
 export const getBackendHost = (): string => {
-    if (process.env.BACKEND_HOST != null) return process.env.BACKEND_HOST;
-    return "http://localhost:3000";
+    return String(process.env.REACT_APP_BACKEND_HOST);
 }

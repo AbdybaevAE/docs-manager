@@ -23,7 +23,8 @@ export const searchReducer = (state: SearchState = initialState, action: BaseAct
         case actionIds.SEARCH_REQUEST: {
             return {
                 ...state,
-                isLoading: true
+                isRequesting: true,
+                results: []
             };
         }
         case actionIds.SEARCH_REQUEST_SUCCESS: {
