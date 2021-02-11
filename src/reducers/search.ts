@@ -1,6 +1,6 @@
 import {
     TSearchResult
-} from "../api/search-service";
+} from "../api/search";
 import {
     actionIds,
     BaseAction

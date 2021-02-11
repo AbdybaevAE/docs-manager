@@ -1,16 +1,10 @@
-import { combineReducers } from 'redux';
-import {
-  numberCollectionReducer,
-  NumberCollectionState,
-} from './number-collection.reducer';
+import {combineReducers} from 'redux';
 import {searchReducer, SearchState} from './search';
+import {loginReducer, LoginState} from './login';
 
 export interface State {
-  numberCollection: NumberCollectionState;
-  searchState: SearchState;
+    searchState : SearchState;
+    loginState : LoginState
 }
 
-export const rootReducers = combineReducers<State>({
-  numberCollection: numberCollectionReducer,
-  searchState: searchReducer
-});
+export const rootReducers = combineReducers < State > ({searchState: searchReducer, loginState: loginReducer});

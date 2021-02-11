@@ -2,6 +2,9 @@ const token_key = 'token_key';
 export const checkCookie = () => {
     return getToken() != null;
 };
+export const hasToken = () => {
+    return getToken() != null;
+};
 export const setToken = (token: string) => {
     localStorage.setItem(token_key, token);
 }

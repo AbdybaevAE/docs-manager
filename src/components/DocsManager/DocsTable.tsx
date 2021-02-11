@@ -1,7 +1,6 @@
-import { TSearchResult } from "../../api/search-service";
+import { TSearchResult } from "../../api/search";
 
 export const TableViewResults = (results: TSearchResult[]) => {
-    console.log('dsada');
     return (
         <div>
             {results.map(item => item.name)}

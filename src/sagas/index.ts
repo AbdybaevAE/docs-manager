@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
-import { watchNewGeneratedNumberRequestStart } from './number-collection.sagas';
+import { watchDocsSaga } from './docs';
+import { watchLoginSaga } from './login';
 
 export const rootSaga = function* root() {
-  yield all([fork(watchNewGeneratedNumberRequestStart)]);
+  yield all([fork(watchDocsSaga), fork(watchLoginSaga)]);
 };

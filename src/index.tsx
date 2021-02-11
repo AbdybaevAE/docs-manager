@@ -4,10 +4,8 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { NumberSetterContainer, NumberViewerContainer } from './components';
 import { store } from './store';
 import App from './App';
-import { Spin } from 'antd';
 import "loaders.css"
 // ReactDOM.render(
 //   <React.StrictMode>

@@ -1,14 +1,10 @@
-import { Space, Spin } from 'antd';
 import React, { FC } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import Loader from 'react-loaders';
-// import { Button, Switch } from 'antd';
 import './App.css';
-import { NumberSetterContainer, NumberViewerContainer } from './components';
-import {LoginComponent} from './components/Login/LoginComponent';
 import PrivateRoute from './containers/PrivateRoute';
-import { DocsManagerContainer } from './components/DocsManager/Container';
-// const loader =
+import { DocsManagerContainer } from './components/DocsManager/DocsManagerContainer';
+import { LoginContainer } from './components/Login/LoginContainer';
 const App: FC = () => (
   
   <BrowserRouter>
@@ -17,13 +13,9 @@ const App: FC = () => (
   <div>
   <Loader type="line-scale" active />
     <Switch>
-      <Route path="/" exact = {true} component = {LoginComponent}/>
-      <Route path="/login" component = {LoginComponent}/>
+      <Route path="/" exact = {true} component = {LoginContainer}/>
+      <Route path="/login" component = {LoginContainer}/>
       <PrivateRoute path='/search' component={DocsManagerContainer} />
-
-
-      {/* <NumberSetterContainer />
-      <NumberViewerContainer/> */}
     </Switch>
   </div>
 

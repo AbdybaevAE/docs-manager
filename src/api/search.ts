@@ -1,6 +1,16 @@
-import { Either, error, success } from "../utils/either";
-import { HttpError, ServerInternal } from "../utils/errors";
+import axios from "axios";
+import {
+    Either,
+    error,
+    success
+} from "../utils/either";
+import { getBackendHost } from '../common/index';
+import {
+    HttpError,
+    ServerInternal
+} from "../utils/errors";
 export type TSearchResult = {
+    id: string;
     name: string;
     type: string;
     class: string;
@@ -10,7 +20,11 @@ export type TSearchResult = {
     };
     createdAt: string;
 }
+export type SearchArgs = {
+    [key: string]: string;
+}
 export type TSearchResultResponse = {
+    id: string;
     file_name: string;
     type: string;
     number: string;
@@ -22,11 +36,13 @@ export type TSearchResultResponse = {
     origanization: string;
     created_at: string;
 }
+const BACKEND_HOST = getBackendHost();
 export class SearchService {
-    static async makeSearch(data: {[name: string]: string}): Promise<Either<HttpError, TSearchResult[]>> {
+    static async makeSearch(data: SearchArgs): Promise < Either < HttpError, TSearchResult[] >> {
         try {
-            const results: TSearchResult[] = await mockHttpCall(data);
-            return success(results);
+            const response = await axios.post(BACKEND_HOST + "/search", data);
+            const results: TSearchResultResponse[] = response.data;
+            return success(results.map(mapSearchResponse));
         } catch (e) {
             return error(ServerInternal);
         }
@@ -34,11 +50,8 @@ export class SearchService {
     }
 }
 
-const mockHttpCall = (data: {[name: string]: string}) : Promise<TSearchResult[]> => {
-    return Promise.resolve([]);
-};
-
 const mapSearchResponse = (data: TSearchResultResponse): TSearchResult => ({
+    id: data.id,
     name: data.file_name,
     type: data.type,
     attributes: data.metadata,

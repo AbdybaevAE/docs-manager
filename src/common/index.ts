@@ -1,16 +1,21 @@
 export const actionIds = {
-    GET_NUMBER_REQUEST_START:
-      '[0] Request a new number to the NumberGenerator async service.',
-    GET_NUMBER_REQUEST_COMPLETED:
-      '[1] NumberGenerator async service returned a new number.',
-    LOGIN_REQUEST: 'LOGIN_REQUEST',
+    MAKE_LOGIN_REQUEST: 'MAKE_LOGIN_REQUEST',
+    MAKE_LOGIN_SUCCESS: 'MAKE_LOGIN_SUCCESS',
+    MAKE_LOGIN_FAILURE: 'MAKE_LOGIN_FAILURE',
     SEARCH_REQUEST: 'SEARCH_REQUEST',
     SEARCH_REQUEST_SUCCESS: 'SEARCH_REQUEST_SUCCESS',
-    SEARCH_REQUEST_FAILURE: 'SEARCH_REQUEST_FAILURE'
-  };
-  
-  export interface BaseAction {
+    SEARCH_REQUEST_FAILURE: 'SEARCH_REQUEST_FAILURE',
+    MAKE_LOGOUT: 'MAKE_LOGOUT',
+    RESTORE_LOGIN: "RESTORE_LOGIN"
+};
+
+export interface BaseAction {
     type: string;
-    payload?;
-  }
-  
+    payload
+        ?
+    ;
+}
+export const getBackendHost = (): string => {
+    if (process.env.BACKEND_HOST != null) return process.env.BACKEND_HOST;
+    return "http://localhost:3000";
+}
