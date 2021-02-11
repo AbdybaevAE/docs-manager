@@ -1,69 +1,87 @@
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import {
+    Form,
+    Input,
+    Button,
+    Checkbox,
+    Row,
+    Col,
+    Divider
+} from 'antd';
+import {useHistory} from 'react-router-dom'
 import React from 'react';
+import {AuthService} from '../../api/auth-service';
+import {setToken} from '../../utils/cookies';
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+    labelCol: {
+        span: 8
+    },
+    wrapperCol: {
+        span: 16
+    }
 };
-// const tailLayout = {
-//   wrapperCol: { offset: 8, span: 16 },
-// };
-
+const tailLayout = {
+    wrapperCol: {
+        offset: 8,
+        span: 16
+    }
+};
+type TLoginForm = {
+    username: string;
+    password: string;
+}
 export const LoginComponent = () => {
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
+    const history = useHistory();
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
+    const onFinish = async(values : TLoginForm) => {
+        const res = await AuthService.makeLogin(values);
+        if (res.isError()) {
+            // ...
+            return;
+        }
+        setToken(res.value.token);
+        history.push('/search');
 
-  return (
-    // <Row type= "">
-    <Row justify="center" align="middle" style={{minHeight: '100vh'}}>
-        <Form
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Введите U-шку',
-          },
-        ]}
-      >
-        <Input size="large" />
-      </Form.Item>
+    };
 
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Введите пароль',
-          },
-        ]}
-      >
-        <Input.Password placeholder="Пароль" size="large" />
-      </Form.Item>
+    const onFinishFailed = (errorInfo : any) => {
+        console.log('Failed:', errorInfo);
+    };
 
-      {/* <Form.Item name="remember" valuePropName="checked">
-        <Checkbox>Запомнить меня</Checkbox>
-      </Form.Item> */}
+    return (
+        <Divider
+            // justify="center"
+            // align="middle"
+            style={{
+            minHeight: '100vh'
+        }}>
+            <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form.Item
+                    name="username"
+                    rules={[{
+                        required: true,
+                        message: 'Введите U-шку'
+                    }
+                ]}>
+                    <Input size="large"/>
+                </Form.Item>
 
-      <Form.Item >
-        <Button type="primary" htmlType="submit">
-          Авторизоваться
-        </Button>
-      </Form.Item>
-    </Form>
-    </Row>
+                <Form.Item
+                    name="password"
+                    rules={[{
+                        required: true,
+                        message: 'Введите пароль'
+                    }
+                ]}>
+                    <Input.Password placeholder="Пароль" size="large"/>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Авторизоваться
+                    </Button>
+                </Form.Item>
+
+            </Form>
+        </Divider>
     );
 };
