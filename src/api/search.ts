@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 import {
     Either,
     error,
     success
 } from "../utils/either";
-import { getBackendHost } from '../common/index';
+import { getBackendHost, Axios } from '../common/index';
 import {
     HttpError,
     ServerInternal
@@ -40,13 +40,12 @@ const BACKEND_HOST = getBackendHost();
 export class SearchService {
     static async makeSearch(data: SearchArgs): Promise < Either < HttpError, TSearchResult[] >> {
         try {
-            const response = await axios.post(BACKEND_HOST + "/search", data);
+            const response = await Axios.post("/metadata/search", data);
             const results: TSearchResultResponse[] = response.data;
             return success(results.map(mapSearchResponse));
         } catch (e) {
             return error(ServerInternal);
         }
-
     }
 }
 

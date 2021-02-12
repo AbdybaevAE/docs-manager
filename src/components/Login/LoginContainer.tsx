@@ -5,7 +5,7 @@ import {TMakeLoginArgs} from '../../api/auth';
 import {State} from '../../reducers';
 import {LoginView} from './LoginView';
 import {useHistory} from 'react-router-dom';
-import { getToken } from '../../utils/cookies';
+import { getToken, hasToken } from '../../utils/cookies';
 const mapDispatchToProps = dispatch => ({
     doLogin: (data : TMakeLoginArgs) => dispatch(makeLoginRequest(data)),
     restoreLogin: (token: string) => dispatch(restoreLogin(token))
@@ -23,6 +23,7 @@ const Container = (props) => {
         }
     , [hasLogin]);
     useEffect(() => {
+        if (!hasToken()) return;
         const token = getToken();
         if (token != null) restoreLogin(token);
     });

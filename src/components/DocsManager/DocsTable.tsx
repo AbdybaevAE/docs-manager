@@ -36,14 +36,15 @@ const columns = [
         render: (text, row, index) => {
             return moment(row.createdAt).format("DD-MM-YYYY")
         }
-    }, {
-        title: "Действия",
-        render: (text, row, index) => {
-            return (
-                <a href={row.name} download>Скачать</a >
-            );
-        }
-    }
+    }, 
+    // {
+    //     title: "Действия",
+    //     render: (text, row, index) => {
+    //         return (
+    //             <a href={row.name} download>Скачать</a >
+    //         );
+    //     }
+    // }
 ];
 export const DocsTable = (props : Props) => {
     const {results} = props;

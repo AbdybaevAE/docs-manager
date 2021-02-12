@@ -1,3 +1,6 @@
+
+import axios from 'axios';
+import { hasToken, getToken } from '../utils/cookies';
 export const actionIds = {
     MAKE_LOGIN_REQUEST: 'MAKE_LOGIN_REQUEST',
     MAKE_LOGIN_SUCCESS: 'MAKE_LOGIN_SUCCESS',
@@ -15,6 +18,20 @@ export interface BaseAction {
         ?
     ;
 }
+export const Axios = axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_HOST
+});
+
 export const getBackendHost = (): string => {
     return String(process.env.REACT_APP_BACKEND_HOST);
 }
+
+
+export const initAxios = () => {
+    if (!hasToken()) return;
+    addAxiosToken(getToken());
+}
+export const addAxiosToken = (token: string) => {
+    Axios.defaults.headers["Authorization"] = token;
+};
+initAxios();

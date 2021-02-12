@@ -4,15 +4,17 @@ import {makeLogout, searchRequestAction} from '../../actions'
 import {State} from '../../reducers';
 import {SearchArgs} from '../../api/search';
 import {TFormData} from './types';
-
+import {clearToken} from '../../utils/cookies';
+import {useHistory} from 'react-router-dom';
 const mapStateToProps = (state : State) => ({results: state.searchState.results});
 
 const mapDispatchToProps = dispatch => ({
     doSearch: (data : SearchArgs) => dispatch(searchRequestAction(data)),
-    doLogout : () => dispatch(makeLogout())
+    doLogout: () => dispatch(makeLogout())
 });
 
 const Container = (props) => {
+    const history = useHistory();
     const {doSearch, results, doLogout} = props;
     const onFormSubmit = (values : TFormData) => {
         const data : SearchArgs = {};
@@ -26,13 +28,19 @@ const Container = (props) => {
             data["type"] = values.docType;
         
         (values.attributes || []).forEach(item => data[item.key] = item.value);
-        
+
         doSearch(data);
+    };
+    const onLogout = () => {
+        clearToken();
+        doLogout();
+        history.push('/login');
+
     };
     return (<DocsManagerView
         doSearch={doSearch}
         results={results}
-        doLogout = {doLogout}
+        onLogout={onLogout}
         onFormSubmit={onFormSubmit}/>);
 };
 export const DocsManagerContainer = connect(mapStateToProps, mapDispatchToProps)(Container);

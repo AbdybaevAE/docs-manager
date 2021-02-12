@@ -1,11 +1,5 @@
-import {
-    Button,
-    Col,
-    Row,
-} from 'antd';
+import {Button, Col, Row} from 'antd';
 import React from 'react';
-import {clearToken} from '../../utils/cookies';
-import {useHistory} from 'react-router-dom';
 import {SearchArgs, TSearchResult} from '../../api/search';
 import {DocsTable} from './DocsTable';
 import {TFormData} from './types';
@@ -15,18 +9,11 @@ type TProps = {
     results: TSearchResult[],
     doSearch: (data : SearchArgs) => void;
     onFormSubmit: (data : TFormData) => void;
-    doLogout: () => void;
+    onLogout: () => void;
 }
 
-
-
 export const DocsManagerView = (props : TProps) => {
-    const history = useHistory();
-    const {onFormSubmit, results, doLogout} = props;
-    const onLogout = () => {
-        clearToken();
-        history.push('/login');
-    }
+    const {onFormSubmit, results, onLogout} = props;
     return (
         <div>
             <Row>
