@@ -30,15 +30,12 @@ export type TMakeLogin = {
 export type TMakeLoginArgs = {
     username: string;
     password: string;
+    role?: string;
 }
 export class AuthService {
     static async makeLogin(values: TMakeLoginArgs): Promise < Either < HttpError, TMakeLogin >> {
         try {
-            const roleValues = {
-                ...values,
-                role: 'value'
-            };
-            const response = await Axios.post("/auth/login", roleValues);
+            const response = await Axios.post("/auth/login", values);
             const token = response.headers.authorization as string;
             if (token == null) throw UnAuthorized;
             setToken(token);

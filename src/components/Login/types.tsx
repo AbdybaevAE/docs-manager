@@ -4,4 +4,5 @@ export type LoginViewProps = {
 export type TLoginForm = {
     username: string;
     password: string;
+    role?: string;
 }

@@ -31,6 +31,15 @@ export const LoginView = (props : LoginViewProps) => {
                     ]}>
                         <Input.Password placeholder="Пароль" size="large"/>
                     </Form.Item>
+                    <Form.Item
+                        name="role"
+                        rules={[{
+                            required: true,
+                            message: 'Введите роль'
+                        }
+                    ]}>
+                        <Input placeholder="U-шка" size="large"/>
+                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Авторизоваться
