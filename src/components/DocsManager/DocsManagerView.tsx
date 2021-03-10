@@ -16,12 +16,6 @@ export const DocsManagerView = (props : TProps) => {
     const {onFormSubmit, results, onLogout} = props;
     return (
         <div>
-            <Row>
-                <Col offset={19}>
-                    <Button onClick={onLogout}>Выход</Button>
-                </Col>
-            </Row>
-
             <SearchFormView onFinish={onFormSubmit}/>
             <DocsTable results={results}/>
         </div>

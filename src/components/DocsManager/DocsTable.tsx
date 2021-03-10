@@ -2,6 +2,7 @@ import {Table, Tag} from "antd";
 import moment from "moment";
 import React from "react";
 import {TSearchResult} from "../../api/search";
+import { getBackendHost } from "../../common";
 type Props = {
     results: TSearchResult[]
 }
@@ -37,14 +38,15 @@ const columns = [
             return moment(row.createdAt).format("DD-MM-YYYY")
         }
     }, 
-    // {
-    //     title: "Действия",
-    //     render: (text, row, index) => {
-    //         return (
-    //             <a href={row.name} download>Скачать</a >
-    //         );
-    //     }
-    // }
+    {
+        title: "Действия",
+        render: (text, row, index) => {
+            const url = getBackendHost() + "/files/" + row.id;
+            return (
+                <a href={url} download>Скачать</a >
+            );
+        }
+    }
 ];
 export const DocsTable = (props : Props) => {
     const {results} = props;

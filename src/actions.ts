@@ -5,6 +5,11 @@ import {BaseAction, actionIds} from './common';
 export const searchRequestAction = (data: SearchArgs) : BaseAction => ({type: actionIds.SEARCH_REQUEST, payload: data});
 export const searchRequestActionSuccess = (data : TSearchResult) : BaseAction => ({type: actionIds.SEARCH_REQUEST_SUCCESS, payload: data});
 export const searchRequestActionFailure = () : BaseAction => ({type: actionIds.SEARCH_REQUEST_FAILURE});
+
+export const addDocRequestAction = (data: SearchArgs) : BaseAction => ({type: actionIds.ADD_DOC_REQUEST, payload: data});
+export const addDocRequestActionSuccess = (data : TSearchResult) : BaseAction => ({type: actionIds.ADD_DOC_REQUEST_SUCCESS, payload: data});
+export const addDocRequestActionFailure = () : BaseAction => ({type: actionIds.ADD_DOC_REQUEST_FAILURE});
+
 export const makeLoginRequest = (data: TMakeLoginArgs) : BaseAction => ({type: actionIds.MAKE_LOGIN_REQUEST, payload: data});
 export const makeLoginSuccess = (data : TSearchResult) : BaseAction => ({type: actionIds.MAKE_LOGIN_SUCCESS, payload: data});
 export const makeLoginFailure = () : BaseAction => ({type: actionIds.MAKE_LOGIN_FAILURE});

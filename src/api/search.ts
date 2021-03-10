@@ -47,8 +47,20 @@ export class SearchService {
             return error(ServerInternal);
         }
     }
+    static async addDoc(data): Promise < Either < HttpError, any >> {
+        console.log('called..');
+        try {
+            await Axios.post("/files", data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return success(null)
+        } catch (e) {
+            return error(ServerInternal);
+        }
+    }
 }
-
 const mapSearchResponse = (data: TSearchResultResponse): TSearchResult => ({
     id: data.id,
     name: data.file_name,

@@ -17,7 +17,7 @@ const Container = (props) => {
     const history = useHistory();
     const {doSearch, results, doLogout} = props;
     const onFormSubmit = (values : TFormData) => {
-        const data : SearchArgs = {};
+        const data = {};
         if (values.docNumber != null) 
             data["number"] = values.docNumber;
         if (values.docClass != null) 
@@ -27,8 +27,9 @@ const Container = (props) => {
         if (values.docType != null) 
             data["type"] = values.docType;
         
-        (values.attributes || []).forEach(item => data[item.key] = item.value);
-
+        (values.attributes || []).forEach(item =>  {
+            if (item.key != null && item.value != null) data[item.key] = item.value
+        });
         doSearch(data);
     };
     const onLogout = () => {
