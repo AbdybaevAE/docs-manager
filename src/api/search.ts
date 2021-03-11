@@ -48,7 +48,6 @@ export class SearchService {
         }
     }
     static async addDoc(data): Promise < Either < HttpError, any >> {
-        console.log('called..');
         try {
             await Axios.post("/files", data, {
                 headers: {

@@ -22,34 +22,25 @@ const Container = (props) => {
 
     },[isSuccess])
 
-    const onSubmit = (values : TFormData) => {
-        const data = {};
-        const formData = new FormData();
-        if (values.docNumber != null) {
-            data["number"] = values.docNumber;
-            formData.append("number", values.docNumber);
+    const onSubmit = (values) => {
+        const data = new FormData();
+        const body = {
+            number: values.docNumber,
+            class: values.docClass,
+            organization: values.docOrg,
+            type: values.docType
+        };
+        const count = 3;
+        
+        for (let i = 0; i < count; ++i) {
+            const key = values['key' + i + 1], value = values['val' + i + 1];
+            if (key != null && value != null) body[key] = value;
         }
-            
-        if (values.docClass != null)  {
-            formData.append("class", values.docClass);
-        }
-        if (values.docOrg != null) {
-            formData.append("organization", values.docOrg);
-        }
-            
-        if (values.docType != null) {
-            data["type"] = values.docType;
-            formData.append("type", values.docType);
-        }
-        formData.append("file",values.docContent)
-        console.log(formData);
-
-        // data["file"] = values.docContent;
-        // console.log('data  is ',data);
-        //     (values.attributes || [])
-        //     .filter(item => item.key != null && item.value != null)
-        //     .forEach(item => data[item.key] = item.value);
-        addDoc(formData);
+        console.log('body is ', body);
+        data.append('body', JSON.stringify(body));
+        data.append('file', values.docType);
+        console.log('form is ',data);
+        addDoc(data);
     };
     return (<CreateDocView onSubmit={onSubmit}/>);
 };
