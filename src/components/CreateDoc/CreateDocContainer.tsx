@@ -37,9 +37,11 @@ const Container = (props) => {
             if (key != null && value != null) body[key] = value;
         }
         console.log('body is ', body);
+        console.log('file content is ', values.docContent[0]);
         data.append('body', JSON.stringify(body));
-        data.append('file', values.docType);
+        data.append('file', values.docContent[0]);
         console.log('form is ',data);
+        console.log(values.docContent);
         addDoc(data);
     };
     return (<CreateDocView onSubmit={onSubmit}/>);
